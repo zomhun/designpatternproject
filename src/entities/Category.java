@@ -31,16 +31,17 @@ public class Category {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Nhập vào id");
 		do {
-			id = Integer.parseInt(sc.nextLine());
-			if(id==0) {
+			try {
+				id = Integer.parseInt(sc.nextLine());
+				if(Category.checkId(list,id)) {
+					System.out.println("Id không được trùng");
+				}
+				else {
+					break;
+				}
+			}catch (NumberFormatException e) {
 				System.out.println("Id không được để trống");
-			}
-			else if(this.checkId(list,id)) {
-				System.out.println("Id không được trùng");
-			}
-			else {
-				break;
-			}
+			 }
 		} while (true);
 		System.out.println("Nhập vào tên danh mục");
 		do {
