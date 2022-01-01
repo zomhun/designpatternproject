@@ -52,7 +52,7 @@ public class Product {
 		System.out.println("Nhập vào id");
 		do {
 			id = sc.nextLine();
-			if(id.equals(null)) {
+			if(id.length()==0) {
 				System.out.println("Id không được để trống");
 			}
 			else if(this.checkId(list,id)) {
@@ -74,25 +74,30 @@ public class Product {
 		} while (true);
 		System.out.println("Nhập vào giá sản phẩm");
 		do {
-			price = Double.parseDouble(sc.nextLine());
-			if(price<1000) {
-				System.out.println("Giá sản phẩm tối thiểu là 1000");
-			}
-			else {
-				break;
+			try {
+				price = Double.parseDouble(sc.nextLine());
+				if(price<1000) {
+					System.out.println("Giá sản phẩm tối thiểu là 1000");
+				}
+				else {
+					break;
+				}
+			}catch (NumberFormatException e) {
+				System.out.println("Giá tiền không được để trống");
 			}
 		} while (true);
 		System.out.println("Nhập vào mã danh mục");
 		do {
-			categoryId = Integer.parseInt(sc.nextLine());
-			if(categoryId==0) {
+			try {
+				categoryId = Integer.parseInt(sc.nextLine());
+				if(Category.checkId(list2,categoryId)==false) {
+					System.out.println("Id danh mục không tồn tại");
+				}
+				else {
+					break;
+				}
+			}catch (NumberFormatException e) {
 				System.out.println("Id danh mục không được để trống");
-			}
-			else if(Category.checkId(list2,categoryId)==false) {
-				System.out.println("Id danh mục không tồn tại");
-			}
-			else {
-				break;
 			}
 		} while (true);
 		System.out.println("Nhập vào status");
@@ -122,25 +127,30 @@ public class Product {
 		} while (true);
 		System.out.println("Nhập vào giá sản phẩm");
 		do {
-			price = Double.parseDouble(sc.nextLine());
-			if(price<1000) {
-				System.out.println("Giá sản phẩm tối thiểu là 1000");
-			}
-			else {
-				break;
+			try {
+				price = Double.parseDouble(sc.nextLine());
+				if(price<1000) {
+					System.out.println("Giá sản phẩm tối thiểu là 1000");
+				}
+				else {
+					break;
+				}
+			}catch (NumberFormatException e) {
+				System.out.println("Giá tiền không được để trống");
 			}
 		} while (true);
 		System.out.println("Nhập vào mã danh mục");
 		do {
-			categoryId = Integer.parseInt(sc.nextLine());
-			if(categoryId==0) {
+			try {
+				categoryId = Integer.parseInt(sc.nextLine());
+				if(Category.checkId(list2,categoryId)==false) {
+					System.out.println("Id danh mục không tồn tại");
+				}
+				else {
+					break;
+				}
+			}catch (NumberFormatException e) {
 				System.out.println("Id danh mục không được để trống");
-			}
-			else if(Category.checkId(list2,categoryId)==false) {
-				System.out.println("Id danh mục không tồn tại");
-			}
-			else {
-				break;
 			}
 		} while (true);
 		System.out.println("Nhập vào status");
