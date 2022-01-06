@@ -9,8 +9,8 @@ import entities.Category;
 import entities.Product;
 
 public class Program {
-	static DAOFactory objFactory = new DAOFactory();
 	public static void main(String[] args) {
+		DAOFactory objFactory = new DAOFactory();
 		Scanner sc = new Scanner(System.in);
 		theLabel:do{
 			System.out.println("*****************Menu******************");
@@ -19,7 +19,7 @@ public class Program {
 			System.out.println("3.Thoát");
 			System.out.println("Lựa chọn của bạn:");
 			try {   
-			    String str = sc.next();  
+			    String str = sc.nextLine();  
 			    int lc=  Integer.parseInt(str);
 //			int lc = Integer.parseInt(sc.nextLine());
 				switch (lc) {
@@ -33,13 +33,13 @@ public class Program {
 						System.out.println("5.Quay lại");
 						System.out.println("Lựa chọn của bạn:");
 						try {   
-						    str = sc.next();  
+						    str = sc.nextLine();  
 						    lc=  Integer.parseInt(str);
 //						lc = Integer.parseInt(sc.nextLine());
 							switch (lc) {
 							case 1:
-								GeneralDAO cateDAO = objFactory.getDAO(Category.class);
-								List list = cateDAO.get();
+								GeneralDAO<Category> cateDAO = objFactory.getDAO(Category.class);
+								List<Category> list = cateDAO.get();
 								System.out.println("Hiển thị d/s danh mục sắp xếp theo tên A-Z");
 								System.out.printf("%-15s%-50s%-5s\n","Mã danh mục","Tên danh mục","Trạng thái");
 								for (Object object : list) {
@@ -66,7 +66,7 @@ public class Program {
 								System.out.println("Nhập vào mã danh mục muốn sửa:");
 								int id = Integer.parseInt(sc.nextLine());
 								c = new Category();
-								if(c.checkId(list, id)) {
+								if(Category.checkId(list, id)) {
 									c.updateData(list,id);
 									if(cateDAO.edit(c)) {
 										System.out.println("Cập nhật thành công");
@@ -84,10 +84,16 @@ public class Program {
 								System.out.println("Nhập vào mã danh mục muốn xóa:");
 								id = Integer.parseInt(sc.nextLine());
 								c = new Category();
-								if(c.checkId(list, id)) {
-									c.setId(id);
-									if(cateDAO.remove(c)) {
-										System.out.println("Xóa thành công");
+								if(Category.checkId(list, id)) {
+									System.out.println("Bạn có chắc chắn muốn xóa không?(y/n)");
+									String xn = sc.nextLine();
+									if(xn.equalsIgnoreCase("y")) {
+										c.setId(id);
+										if(cateDAO.remove(c)) {
+											System.out.println("Xóa thành công");
+										}else {
+											System.out.println("Xóa thất bại");
+										}
 									}else {
 										System.out.println("Xóa thất bại");
 									}
@@ -115,13 +121,13 @@ public class Program {
 						System.out.println("5.Quay lại");
 						System.out.println("Lựa chọn của bạn:");
 						try {   
-						    str = sc.next();  
+						    str = sc.nextLine();  
 						    lc=  Integer.parseInt(str);
 //						lc = Integer.parseInt(sc.nextLine());
 							switch (lc) {
 							case 1:
-								GeneralDAO proDAO = objFactory.getDAO(Product.class);
-								List list = proDAO.get();
+								GeneralDAO<Product> proDAO = objFactory.getDAO(Product.class);
+								List<Product> list = proDAO.get();
 								System.out.println("Hiển thị d/s sản phẩm");
 								System.out.printf("%-15s%-50s%-20s%-50s%-5s\n","Mã sản phẩm","Tên sản phẩm","giá","Tên danh mục","Trạng thái");
 								for (Object object : list) {
@@ -130,8 +136,8 @@ public class Program {
 								}
 								break;
 							case 2:
-								GeneralDAO cateDAO = objFactory.getDAO(Category.class);
-								List list2 = cateDAO.get();
+								GeneralDAO<Category> cateDAO = objFactory.getDAO(Category.class);
+								List<Category> list2 = cateDAO.get();
 								proDAO = objFactory.getDAO(Product.class);
 								list = proDAO.get();
 								System.out.println("Thêm mới danh mục");
